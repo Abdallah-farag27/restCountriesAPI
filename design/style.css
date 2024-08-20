@@ -3,7 +3,8 @@
 }
 body {
   margin: 0;
-  margin-bottom: 76px;
+  margin-top: 76px;
+  background-color: rgb(248, 248, 248);
 }
 
 .frontBar {
@@ -11,7 +12,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-left: 72px;
-  /* background-color: lightcoral; */
+  background-color: white;
   margin: 0;
   position: fixed;
   height: 76px;
@@ -19,7 +20,6 @@ body {
   top: 0;
   left: 0;
   padding-right: 72px;
-  /* border-bottom: 1px solid gray; */
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 .title {
@@ -27,4 +27,74 @@ body {
 }
 .dark-mode {
   font-size: 14px;
+}
+.searching{
+  padding:60px 72px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  /* display: block; */
+}
+.searchbar{
+  width:425px;
+  height:48px;
+  padding-left:70px;
+  border:none;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+  border-radius: 4px;
+}
+.searchbar::placeholder{
+  font-size: 14px;
+}
+.filter{
+  width: 200px;
+  height:48px;
+  padding: 0px 10px;
+  border:none;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+  border-radius: 4px;
+}
+
+.counrty {
+  display: inline-block;
+  width: 275px;
+  height: 350px;
+  border:none;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 72px;
+  margin-bottom: 70px;
+}
+
+.name {
+  padding:5px 10px;
+  margin: 16px;
+  margin-bottom:18px ;
+  font-weight: bold;
+  font-size: 20px;
+}
+.info{
+  font-weight: 700px;
+  /* margin:0px 16px; */
+  /* padding:0px 3px; */
+}
+.info p{
+  margin:0px 16px;
+  padding-left: 10px;
+  padding-bottom: 9px;
+}
+.info span{
+  color: rgba(0, 0, 0, 0.7);
+}
+.flag{
+  display: block;
+  width: 275px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.countries-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
