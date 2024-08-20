@@ -30,7 +30,7 @@ function zico(country) {
         <div class="info">
           <p>Population: <span>${country.population}</span></p>
           <p>Region: <span>${country.region}</span></p>
-          <p>Capital: <span>${country.capital}</span></p>
+          <p>Capital: <span>${country.capital || "No Capital"}</span></p>
         </div>
       </div>`;
   countries.insertAdjacentHTML("beforeend", html);
