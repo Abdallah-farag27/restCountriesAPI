@@ -10,7 +10,7 @@ fetch("/data.json")
     let ahmed = 0;
     data.forEach((element, i) => {
       const html = `
-        <div class="counrty" index=${ahmed++}>
+        <div class="country" index=${ahmed++}>
           <img class="flag" src="${element.flag}" />
           <p class="name">${element.name}</p>
           <div class="info">
@@ -22,7 +22,7 @@ fetch("/data.json")
       countries.insertAdjacentHTML("beforeend", html);
     });
     countries.addEventListener("click", (e) => {
-      const country = e.target.closest(".counrty");
+      const country = e.target.closest(".country");
       if (country) console.log(data[+country.getAttribute("index")]);
     });
   })
