@@ -141,9 +141,9 @@ const searchbar = document.querySelector('.searchbar');
         });
       }
     });
+    const allCountries = [...document.querySelectorAll('.country')];
     body.addEventListener('keydown', e => {
       if (e.code !== 'Enter') return;
-      const allCountries = [...document.querySelectorAll('.country')];
       const serCountryName = searchbar.value.toLowerCase();
       const serCountry = allCountries.find(
         el => el.querySelector('p').textContent.toLowerCase() === serCountryName
@@ -154,6 +154,26 @@ const searchbar = document.querySelector('.searchbar');
       }
       allCountries.forEach(el => el.classList.add('hidden'));
       serCountry.classList.remove('hidden');
+    });
+    filter.addEventListener('change', e => {
+      e.preventDefault();
+      const region = filter.value;
+      console.log(region);
+      const regionalCountries = data.filter(el => el.region === region);
+      countries.innerHTML = '';
+      regionalCountries.forEach((element, i) => {
+        const html = `
+        <div class="country" index=${index++}>
+        <img class="flag" src="${element.flag}" />
+        <p class="name">${element.name}</p>
+        <div class="info">
+        <p>Population: <span class="data">${element.population}</span></p>
+        <p>Region: <span class="data">${element.region}</span></p>
+        <p>Capital: <span class="data">${element.capital}</span></p>
+        </div>
+        </div>`;
+        countries.insertAdjacentHTML('beforeend', html);
+      });
     });
   } catch (err) {
     console.error(err.message);
