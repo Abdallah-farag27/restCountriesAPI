@@ -7,24 +7,24 @@ const body = document.body;
 const header = document.querySelector(".frontBar");
 const searchBar = document.querySelector(".searchbar");
 const filter = document.querySelector(".filter");
-fetch("/data.json")
-  .then((res) => res.json())
-  .then((Data) => {
-    data = Data;
-    // console.log(data);
+(async function () {
+  try {
+    const res = await fetch("/data.json");
+    const data = await res.json();
+    console.log(data);
     countries.innerHTML = "";
-    let ahmed = 0;
+    let index = 0;
     data.forEach((element, i) => {
       const html = `
-        <div class="country" index=${ahmed++}>
-          <img class="flag" src="${element.flag}" />
-          <p class="name">${element.name}</p>
-          <div class="info">
-            <p>Population: <span class="data">${element.population}</span></p>
-            <p>Region: <span class="data">${element.region}</span></p>
-            <p>Capital: <span class="data">${element.capital}</span></p>
-          </div>
-        </div>`;
+      <div class="country" index=${index++}>
+      <img class="flag" src="${element.flag}" />
+      <p class="name">${element.name}</p>
+      <div class="info">
+      <p>Population: <span class="data">${element.population}</span></p>
+      <p>Region: <span class="data">${element.region}</span></p>
+      <p>Capital: <span class="data">${element.capital}</span></p>
+      </div>
+      </div>`;
       countries.insertAdjacentHTML("beforeend", html);
     });
     countries.addEventListener("click", (e) => {
@@ -56,5 +56,7 @@ fetch("/data.json")
         cards.forEach((card) => (card.style.backgroundColor = "white"));
       }
     });
-  })
-  .catch(() => console.log("ahmed amr"));
+  } catch (err) {
+    console.error(err.message);
+  }
+})();
