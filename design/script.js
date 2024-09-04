@@ -7,6 +7,9 @@ const body = document.body;
 const header = document.querySelector(".frontBar");
 const searchBar = document.querySelector(".searchbar");
 const filter = document.querySelector(".filter");
+const page1 = document.querySelector(".page-1");
+const page2 = document.querySelector(".country--info");
+
 (async function () {
   try {
     const res = await fetch("/data.json");
@@ -14,6 +17,56 @@ const filter = document.querySelector(".filter");
     console.log(data);
     countries.innerHTML = "";
     let index = 0;
+    const displayCountry = function (e) {
+      const countryEl = e.target.closest(".country");
+      // if (country) console.log(data[+country.getAttribute("index")]);
+      if (!countryEl) return;
+      const country = data[+countryEl.getAttribute("index")];
+      console.log(country);
+      let html = ` <button class="back-button">🔙 Back</button>
+      <div class="details">
+        <div>
+          <img class="country__flag" src="${country.flag}" />
+        </div>
+        <div class="country-details">
+          <h2 class="country__name">${country.name}</h2>
+          <div class="country-statistics">
+            <div class="first-column">
+              <p>Native Name: <span>${country.nativeName}</span></p>
+              <p>Population: <span>${country.population}</span></p>
+              <p>Region: <span>${country.region}</span></p>
+              <p>Sub Region: <span>${country.subregion}</span></p>
+              <p>Capital: <span>${country.capital}</span></p>
+            </div>
+            <div class="secound-column">
+              <p>Top Level Domain: <span>${country.topLevelDomain[0]}</span></p>
+              <p>Currencies: <span>${country.currencies[0].name}</span></p>
+              <p>
+                Languages:
+                <span>${country.languages[0].name}</span>
+              </p>
+            </div>
+          </div>
+          <div class="border-countries">
+            <p>Border Countries:</p>`;
+      if (country.borders) {
+        country.borders.forEach((borderCode) => {
+          const border = data.find((el) => el.alpha3Code === borderCode);
+          if (border) {
+            const htmlB = `
+            <button class="border-country--btn">${border.name}</button>
+            `;
+            html += htmlB;
+          }
+        });
+      }
+      html += "</div></div></div>";
+
+      page1.classList.add("hidden");
+      page2.innerHTML = "";
+      page2.insertAdjacentHTML("afterbegin", html);
+      page2.classList.remove("hidden");
+    };
     data.forEach((element, i) => {
       const html = `
       <div class="country" index=${index++}>
@@ -27,10 +80,7 @@ const filter = document.querySelector(".filter");
       </div>`;
       countries.insertAdjacentHTML("beforeend", html);
     });
-    countries.addEventListener("click", (e) => {
-      const country = e.target.closest(".country");
-      if (country) console.log(data[+country.getAttribute("index")]);
-    });
+    countries.addEventListener("click", displayCountry);
     btnTheme.addEventListener("click", function (e) {
       e.preventDefault();
       darkMode = !darkMode;
@@ -60,3 +110,4 @@ const filter = document.querySelector(".filter");
     console.error(err.message);
   }
 })();
+

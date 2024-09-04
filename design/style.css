@@ -197,7 +197,7 @@ the Details page
   display: inline-block;
   font-size: 14px;
 }
-.border-countries button {
+.border-country--btn {
   border: none;
   background-color: rgb(248, 248, 248);
   border-radius: 4px;
@@ -207,7 +207,7 @@ the Details page
   height: 24px;
 }
 
-.border-countries button:hover {
+.border-country--btn:hover {
   cursor: pointer;
 }
 
