@@ -9,19 +9,17 @@ const searchBar = document.querySelector(".searchbar");
 const filter = document.querySelector(".filter");
 const page1 = document.querySelector(".page-1");
 const page2 = document.querySelector(".country--info");
+const borderBtn = document.querySelector(".border-country--btn");
+const borderContainer = document.querySelector(".border-countries");
+const searchbar = document.querySelector(".searchbar");
 
 (async function () {
   try {
     const res = await fetch("/data.json");
     const data = await res.json();
-    console.log(data);
     countries.innerHTML = "";
     let index = 0;
-    const displayCountry = function (e) {
-      const countryEl = e.target.closest(".country");
-      // if (country) console.log(data[+country.getAttribute("index")]);
-      if (!countryEl) return;
-      const country = data[+countryEl.getAttribute("index")];
+    const displayCountry = function (country) {
       console.log(country);
       let html = ` <button class="back-button">🔙 Back</button>
       <div class="details">
@@ -47,9 +45,9 @@ const page2 = document.querySelector(".country--info");
               </p>
             </div>
           </div>
-          <div class="border-countries">
-            <p>Border Countries:</p>`;
+          `;
       if (country.borders) {
+        html += '<div class="border-countries"><p>Border Countries:</p>';
         country.borders.forEach((borderCode) => {
           const border = data.find((el) => el.alpha3Code === borderCode);
           if (border) {
@@ -66,6 +64,16 @@ const page2 = document.querySelector(".country--info");
       page2.innerHTML = "";
       page2.insertAdjacentHTML("afterbegin", html);
       page2.classList.remove("hidden");
+      borderContainer.addEventListener("click", (e) => {
+        // const btn = e.target
+        // console.log(e.target);
+        console.log("zico");
+        // const name = e.target.textContent;
+        // console.log(name);
+        // const borCountry = data.find((country) => country.name === name);
+        // console.log(borCountry);
+        // displayCountry(borCountry);
+      });
     };
     data.forEach((element, i) => {
       const html = `
@@ -80,7 +88,12 @@ const page2 = document.querySelector(".country--info");
       </div>`;
       countries.insertAdjacentHTML("beforeend", html);
     });
-    countries.addEventListener("click", displayCountry);
+    countries.addEventListener("click", (e) => {
+      const countryEl = e.target.closest(".country");
+      if (!countryEl) return;
+      const country = data[+countryEl.getAttribute("index")];
+      displayCountry(country);
+    });
     btnTheme.addEventListener("click", function (e) {
       e.preventDefault();
       darkMode = !darkMode;
@@ -104,6 +117,23 @@ const page2 = document.querySelector(".country--info");
         filter.style.backgroundColor = "white";
         allData.forEach((span) => (span.style.color = " rgba(0, 0, 0, 0.7)"));
         cards.forEach((card) => (card.style.backgroundColor = "white"));
+      }
+    });
+    body.addEventListener("keydown", (e) => {
+      if (e.code !== "Enter") return;
+      console.log(searchbar.value);
+      const allCountries = [...document.querySelectorAll(".country")];
+      if (!searchbar.value) {
+        allCountries.forEach((el) => el.classList.remove("hidden"));
+      } else {
+        const serCountryName = searchbar.value.toLowerCase();
+        console.log(serCountryName);
+        allCountries.forEach((el) => el.classList.add("hidden"));
+        const serCountry = allCountries.find(
+          (el) =>
+            el.querySelector("p").textContent.toLowerCase() === serCountryName
+        );
+        serCountry.classList.remove("hidden");
       }
     });
   } catch (err) {
