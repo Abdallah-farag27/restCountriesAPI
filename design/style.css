@@ -45,19 +45,14 @@ body {
 .searchbar {
   width: 425px;
   height: 48px;
-  padding-left: 70px;
+  padding-left: 30px;
   border: none;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-  background-image: url("search.svg");
-  background-repeat: no-repeat;
-  background-position: 29px;
-  background-size: 29px;
-  padding-left: 15px;
 }
 .searchbar::placeholder {
   font-size: 14px;
-  padding-left: 65px;
+  padding-left: 45px;
 }
 
 .filter {
@@ -95,7 +90,7 @@ body {
   font-weight: 700px;
   padding-bottom: 20px;
 }
-/* .info:hover{cursor: pointer;} */
+
 .info p {
   margin: 0px 16px;
   padding-left: 10px;
@@ -114,9 +109,6 @@ body {
   object-fit: cover;
   object-position: center;
 }
-/* .flag:hover{
-  cursor: pointer;
-} */
 .countries-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -205,6 +197,7 @@ the Details page
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   width: 80px;
   height: 24px;
+  width:fit-content
 }
 
 .border-country--btn:hover {

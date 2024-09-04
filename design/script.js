@@ -8,23 +8,21 @@ const header = document.querySelector(".frontBar");
 const searchBar = document.querySelector(".searchbar");
 const filter = document.querySelector(".filter");
 const page1 = document.querySelector(".page-1");
-const page2 = document.querySelector(".country--info");
-const borderBtn = document.querySelector(".border-country--btn");
-const borderContainer = document.querySelector(".border-countries");
-const searchbar = document.querySelector(".searchbar");
+const page2 = document.querySelector('.country--info');
+const searchbar = document.querySelector('.searchbar');
 
 (async function () {
   try {
-    const res = await fetch("/data.json");
+    const res = await fetch('/data.json');
     const data = await res.json();
-    countries.innerHTML = "";
+    countries.innerHTML = '';
     let index = 0;
     const displayCountry = function (country) {
       console.log(country);
       let html = ` <button class="back-button">🔙 Back</button>
       <div class="details">
         <div>
-          <img class="country__flag" src="${country.flag}" />
+        <img class="country__flag" src="${country.flag}" />
         </div>
         <div class="country-details">
           <h2 class="country__name">${country.name}</h2>
@@ -43,13 +41,13 @@ const searchbar = document.querySelector(".searchbar");
                 Languages:
                 <span>${country.languages[0].name}</span>
               </p>
-            </div>
+              </div>
           </div>
           `;
       if (country.borders) {
         html += '<div class="border-countries"><p>Border Countries:</p>';
-        country.borders.forEach((borderCode) => {
-          const border = data.find((el) => el.alpha3Code === borderCode);
+        country.borders.forEach(borderCode => {
+          const border = data.find(el => el.alpha3Code === borderCode);
           if (border) {
             const htmlB = `
             <button class="border-country--btn">${border.name}</button>
@@ -58,22 +56,33 @@ const searchbar = document.querySelector(".searchbar");
           }
         });
       }
-      html += "</div></div></div>";
+      html += '</div></div></div>';
 
-      page1.classList.add("hidden");
-      page2.innerHTML = "";
-      page2.insertAdjacentHTML("afterbegin", html);
-      page2.classList.remove("hidden");
-      borderContainer.addEventListener("click", (e) => {
-        // const btn = e.target
-        // console.log(e.target);
-        console.log("zico");
-        // const name = e.target.textContent;
-        // console.log(name);
-        // const borCountry = data.find((country) => country.name === name);
-        // console.log(borCountry);
-        // displayCountry(borCountry);
+      page1.classList.add('hidden');
+      page2.innerHTML = '';
+      page2.insertAdjacentHTML('afterbegin', html);
+      page2.classList.remove('hidden');
+      const borderContainer = document.querySelector('.border-countries');
+      const backBtn = document.querySelector('.back-button');
+      borderContainer.addEventListener('click', e => {
+        const btn = e.target;
+        const name = e.target.textContent;
+        const borCountry = data.find(country => country.name === name);
+        displayCountry(borCountry);
       });
+      backBtn.addEventListener('click', e => {
+        page2.classList.add('hidden');
+        page1.classList.remove('hidden');
+      });
+      if (darkMode) {
+        document.querySelector('.back-button').style.color = 'white';
+        document.querySelector('.back-button').style.backgroundColor =
+          '#2e3a4b';
+        document.querySelectorAll('.border-country--btn').forEach(btn => {
+          btn.style.color = 'white';
+          btn.style.backgroundColor = '#2e3a4b';
+        });
+      }
     };
     data.forEach((element, i) => {
       const html = `
@@ -86,55 +95,65 @@ const searchbar = document.querySelector(".searchbar");
       <p>Capital: <span class="data">${element.capital}</span></p>
       </div>
       </div>`;
-      countries.insertAdjacentHTML("beforeend", html);
+      countries.insertAdjacentHTML('beforeend', html);
     });
-    countries.addEventListener("click", (e) => {
-      const countryEl = e.target.closest(".country");
+    countries.addEventListener('click', e => {
+      const countryEl = e.target.closest('.country');
       if (!countryEl) return;
-      const country = data[+countryEl.getAttribute("index")];
+      const country = data[+countryEl.getAttribute('index')];
       displayCountry(country);
     });
-    btnTheme.addEventListener("click", function (e) {
+    btnTheme.addEventListener('click', function (e) {
       e.preventDefault();
       darkMode = !darkMode;
-      const cards = document.querySelectorAll(".country");
-      const allData = document.querySelectorAll(".data");
+      const cards = document.querySelectorAll('.country');
+      const allData = document.querySelectorAll('.data');
       if (darkMode) {
-        btnTheme.textContent = "🌞 Light Mode";
-        body.classList.add("dark-mode");
-        header.style.backgroundColor = "#2e3a4b";
-        searchBar.style.backgroundColor = "#2e3a4b";
-        filter.style.backgroundColor = "#2e3a4b";
+        btnTheme.textContent = '🌞 Light Mode';
+        body.classList.add('dark-mode');
+        header.style.backgroundColor = '#2e3a4b';
+        searchBar.style.backgroundColor = '#2e3a4b';
+        filter.style.backgroundColor = '#2e3a4b';
+        document.querySelector('.back-button').style.color = 'white';
+        document.querySelector('.back-button').style.backgroundColor =
+          '#2e3a4b';
+        document.querySelectorAll('.border-country--btn').forEach(btn => {
+          btn.style.color = 'white';
+          btn.style.backgroundColor = '#2e3a4b';
+        });
         allData.forEach(
-          (span) => (span.style.color = "rgba(200, 200, 200, 0.7)")
+          span => (span.style.color = 'rgba(200, 200, 200, 0.7)')
         );
-        cards.forEach((card) => (card.style.backgroundColor = "#2e3a4b"));
+        cards.forEach(card => (card.style.backgroundColor = '#2e3a4b'));
       } else {
-        btnTheme.textContent = "🌜 Dark Mode";
-        body.classList.remove("dark-mode");
-        header.style.backgroundColor = "white";
-        searchBar.style.backgroundColor = "white";
-        filter.style.backgroundColor = "white";
-        allData.forEach((span) => (span.style.color = " rgba(0, 0, 0, 0.7)"));
-        cards.forEach((card) => (card.style.backgroundColor = "white"));
+        btnTheme.textContent = '🌜 Dark Mode';
+        body.classList.remove('dark-mode');
+        header.style.backgroundColor = 'white';
+        searchBar.style.backgroundColor = 'white';
+        filter.style.backgroundColor = 'white';
+        allData.forEach(span => (span.style.color = ' rgba(0, 0, 0, 0.7)'));
+        cards.forEach(card => (card.style.backgroundColor = 'white'));
+        document.querySelector('.back-button').style.color = 'black';
+        document.querySelector('.back-button').style.backgroundColor = 'white';
+        document.querySelectorAll('.border-country--btn').forEach(btn => {
+          btn.style.color = 'black';
+          btn.style.backgroundColor = 'white';
+        });
       }
     });
-    body.addEventListener("keydown", (e) => {
-      if (e.code !== "Enter") return;
-      console.log(searchbar.value);
-      const allCountries = [...document.querySelectorAll(".country")];
-      if (!searchbar.value) {
-        allCountries.forEach((el) => el.classList.remove("hidden"));
-      } else {
-        const serCountryName = searchbar.value.toLowerCase();
-        console.log(serCountryName);
-        allCountries.forEach((el) => el.classList.add("hidden"));
-        const serCountry = allCountries.find(
-          (el) =>
-            el.querySelector("p").textContent.toLowerCase() === serCountryName
-        );
-        serCountry.classList.remove("hidden");
+    body.addEventListener('keydown', e => {
+      if (e.code !== 'Enter') return;
+      const allCountries = [...document.querySelectorAll('.country')];
+      const serCountryName = searchbar.value.toLowerCase();
+      const serCountry = allCountries.find(
+        el => el.querySelector('p').textContent.toLowerCase() === serCountryName
+      );
+      if (!serCountry) {
+        allCountries.forEach(el => el.classList.remove('hidden'));
+        return;
       }
+      allCountries.forEach(el => el.classList.add('hidden'));
+      serCountry.classList.remove('hidden');
     });
   } catch (err) {
     console.error(err.message);
